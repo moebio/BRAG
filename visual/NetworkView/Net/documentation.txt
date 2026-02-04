@@ -1,0 +1,152 @@
+
+///////////////////
+
+The Tile Net receives either a Net instance (from pulse farmework), or a [nodes, relations] array.
+
+Some properties in the nodes could be used in the visualziation:
+
+name
+color
+urlImage			//if nodes have this property its image will be downloaded
+weight 				//used for sizing the nodes, but any other numeric property could be used
+description 		//used for tooltips (although any string property could be used)
+colorsTable 		//an array with two arrays, [ [colors], [weights, normalized to sum = 1] ]
+x 					//a numeric value that could be used for positioning the node
+y 					//idem
+
+
+Some properties in the relations could be used in the visualziation:
+
+color
+weight
+
+
+
+///////////////////send and receive
+
+NetView can receive different objects that allows to:
+
+	set the network to be visualized. It's possible to send different networks through one session, if a network shares some of the nodes of the previous, these stay in same position, so it appears as if the network was modified.
+
+	set the configuration of the Visualization, including physics model behavior, nodes and relations appereances (see below for more information on the configuration object)
+
+	change aspects of the layout (such as clustering, see below for all the options)
+
+	control the network in session time, doings things such as selecting nodes or simulating a rollover.
+
+
+NetView will send information, such as nodes and relations being selected or hovered.
+
+
+For a comprehensive documentation of all the Objects received and sent by NetView, check communication.json
+
+
+
+
+
+///////////////////configuration object
+
+nodes:
+	text_size:14
+	text_color:'white'
+	text_border_color:'white'
+	box_color:'black'
+	box_border_color:'black'
+	box_padding:2
+	fixed_width:100
+	draw_mode:'image'						//box, image_with_frame, image_circle, image_circle_with_frame text 
+	font:"Arial"
+	size_property:"weight"
+	draggable:true
+	tooltip:false
+	tooltip_property:'description'
+	useColorsTable:false					//requires that node has property colorsTable
+	maxSize:1
+
+relations:
+	show_mode:'over'						//other options: all, over, close_all, close_few
+	show_mode_on_layout:'context'			//other options: all
+	curvature:0 							//inactive if 0
+	arrow_size:0 							//inactive if 0
+	color:null
+	size_property:"weight"					//name of node property to be used as size 
+	tooltip:false
+	tooltip_property:'name'
+	max_thick:2
+
+physics:
+	friction:0.9							//friction of the system 0 < friction < 1
+	k:0.01 									//strength factor fo the system
+	dEqSprings:130							//equilibrium distance between connected nodes
+	dEqRepulsors:220 						//equilibrium distance between non connected nodes
+	attractionToCenter:false				//nodes are attracted to center of space
+
+view:
+	background:'white' 						//background color 
+	zoom_min:0.1 							//maximum zoom in (zoom is controlled with wheel)
+	zoom_max:15 							//maximum zoom out
+	nodes_zoom_min:0.1 						//maximum nodes zoom in (zoom is controlled with SHIFT + wheel)
+	nodes_zoom_max:15 						//maximum nodes zoom out
+	
+interaction:
+	nodes_zoom:'close'						//other options: static,close
+	shift_nodes_zoom:true
+	node_unselection:"anywhere"				//other options: over_selected
+	milliseconds_for_superpressing:300		//time elapsed when pressing a node to start conencting to another node
+
+layout:
+	selection_mode:'spanning_tree'			//other options: impact_from, impact_to, spanning_tree
+	r_spanning_circles:120
+	draw_loops:0 							//draw loops of size n, if n>0
+	draw_grid:true 							//for fixed values of x or y
+	simulation:false						
+	clusters_circles_margin:4
+
+
+
+In order to change any configuration value, or a few of them, only the object with such property or properties need to be sent.
+
+example:
+
+tile.sendData({type:"configuration", value:{nodes:{text_size:12, fixed_width:300}, physics:{attractionToCenter:true}}})
+
+will change three configuration parameters while keeping the remaining with the same default value. It´s possible to change configuration properties many times during a session.
+
+
+
+
+///////////////////layouts
+
+
+to set a layout send an object with type "layout" and any of the following values:
+
+
+clusters
+
+clusters category (uses category property of nodes)
+
+cloud (single disc arrangement)
+
+xy (uses properties x and y of nodes)
+
+x (uses property x of nodes)
+
+y (uses property y of nodes)
+
+free (free nodes from fixed x and/or y positions)
+
+free x (frees nodes from x position)
+
+free y (frees nodes from y position)
+
+fit in window (keeps relative current positions and places all nodes within window boundaries)
+
+center (moves stage to have the net in the center of screen)
+
+
+
+example:
+
+tile.sendData({type:"layout", value:"x"}) 
+
+will fix horizontal position of nodes, requiring they have an x property with numeric value, while keeping vertical positions free.

@@ -1,0 +1,228 @@
+Semantic Analytic Integration
+
+Initial notes
+
+This invention is one of those ideas that are so simple it makes you think surely I’m not the first to have thought about it. On the other hand, if it’s the case that there’s no competing patent and we succeed with patenting this invention, the opportunity is big, precisely because of its simplicity.
+
+I also think there’s a huge opportunity in patenting a process that involves LLMs. I have no idea what’s the current landscape of patents around language models right now, but if we succeed this would be one of the first ones.
+
+Intro
+
+I present here a simple invention that solves two important problems when using LLMs for the purpose of analyzing data. At the core of the idea is the combination of two computation approaches:
+
+Procedural algorithms: in which computers perform a sequence of steps towards a computation goal. In the context of data, this could be a series of data transformations and analysis, such as aggregating sales by day of the week, and then computing mean and standard deviation for each of the seven days. The input and the output is data. The narrative and purpose of the analysis are external, and while they define what data to use on the analysis, what analysis to perform and how to interpret or use the outcome results, narrative and purposes do not play any role on the computation.
+
+Linguistic computation: in which large language models (LLMs) make conceptual and numerical computation combined. The prompt that triggers the computation contains data or a description of the data, along with a question or directive. The narrative and purpose are part of the computation process, and the LLMs can “decide” the types of analysis to perform. The sequence of analytical or transformative steps are intertwined with narrative, and the outputs could be presented along with comments on how to interpret them and/or how to use them.
+
+In general a system chooses one or the other approach, and in many instances the second approach is replacing the first. Procedural algorithms require knowledge and experience in coding, statistics, data science, business analytics, field knowledge or some combination of these. The linguistic computation approach only requires some understanding of the data and an understanding of the business.
+
+Problems
+
+Using LLMs to analyze data is extremely promising: not only is it capable of understanding a question related to the data, writing queries and code that extract insights from the data, but also it can interpret the results. A chain of thought or agent configurations can iterate and amplify these capabilities. On top of that, LLMs can interpret results of analysis, discover patterns and insights, and even be proactive with business solutions, etc…
+
+When it comes to provide access to the LLMs to the data, there are some options and all carry problems:
+
+Send all the data as part of the context of a prompt: this will work only if the dataset is small. Even if LLMs contexts have been consistently increasing and are now more capable to manage large prompts, there are strong limitations that won’t be overcome, and sending megas of data (which in terms of dataset size is considered small) is out of the question.
+
+RAG or data sample: RAG is a widely used tactic, mostly based on using embeddings as a tool to identify the most relevant data within a dataset in relation to a prompt or question. A more generalized version of RAG, that does not require the data to be text based would be based on a mechanism that samples a dataset in a way it preserves the most important datapoints in regards with a question. This could work in certain cases, providing the filter mechanism is very good, and that a small sample of datapoints allow for an answer that addresses the question. This is rarely the case. Many business or statistical questions require computing over all the dataset, a small sample, regardless of how good it’s built, won’t work for most of the questions.
+
+Both sending the complete dataset, or a sample carry other serious issues: 
+Even if you can embed the complete dataset on the prompt, or if you sampled it, the size of the prompt will be too big, and the latency and costs will be big as well. This problem annihilates the possibility of a user experience of sending questions and getting valuable answers iteratively.
+In most of the cases, for security and privacy reasons, it’s not desirable to share data with an LLM provider
+
+Code for analysis: a solution that doesn’t require sending a single datapoint is to ask the LLM to build code that performs the desired analysis. LLMs are extremely good at writing code and certainly capable of writing simple and advanced analysis functions. By providing a description of the dataset (a commented schema) the LLM can analyze the question and write a function that will be applied over the dataset and return the best possible outcome that addresses the question. The issue with this approach is that the function might return a good analytical result, but not an answer to the question. The output of running the function wrote by the LLM will be a number, an array, a table, or a json. The structured outcome is only a piece, maybe important, but not the insightful (and semantic) answer the user expects.
+
+
+Solution
+We propose a solution that solves all the above mentioned problems, while combining the best of each of the approaches:
+
+Small prompts
+not a single datapoint is sent to the LLM
+Analysis is performed over the entire dataset
+If required for addressing a given question, it performs multiple analysis over the dataset, not just one.
+The answer is text combined with presentation of results, insights, pattern recognition, and on the overall a meaningful answer expressed in natural language.
+
+
+Technical description
+
+
+In order to create an agile system for the users to make questions about their data, we invented a unique prompt engineering system called Semantic Analytic Integration that allows for using LLMs to analyse, as mentioned: large amounts of data, while sending small prompts that do not contain data, and that generate a response that is semantic and analytical.
+
+Let’s start by considering a simple case: the dataset is a JSON, large enough that it can’t be used as context of an LLM prompt. (And the upper size limit of the data depends on the environment, if, for instance, the system runs on a website, it will be small enough that it can be loaded on a browser. Something between 100k and 10M of data).
+
+
+
+
+
+
+The simplest version of the solution is a single LLM prompt that contains three parts:
+
+A commented schema of the data
+A text that describes the JSON structure and its features, with comments about each feature: its type, its meaning and maybe extra info such as range or mode
+
+The question
+The business or analytical question we want to ask about the reality represented by the dataset. It could be a very analytical and narrow question (the average price of a type of product), or a more open and strategical question (analyze the seasonality of certain products that are more likely to vary sales through the year)
+
+The prompt guideline (example for an environment running javascript/Node.js)
+“Please write a javascript function that performs such analysis, and returns a text with the results presented on it. An example for the question "What's the average cost of the product the person buy", would be a javascript function that calculates this average, and then builds and returns the text "The average cost of all the <b>325</b> products is usd <b>$21.5</b>". The text will be displayed in an html area, so the text should be html code. The function receives as a single parameter the array of objects, and returns the text to be displayed. You should respond with a javascript code that defines a function named analysisFunction, that will be subsequently evaled, so do not add comments previous or after the code, deliver just the code.”
+
+
+The answer will be a function (in the indicated language) that will receive all the data and that will return text: the answer to the question.
+
+
+
+Flow of data on the Semantic Analytical Integration system, most of the movement and process happens on the client side, the LLM receives a prompt that doesn’t contain data and sends code.
+
+
+
+Examples
+
+I showcase 3 examples based on personal data (Amazon shopping, Amazon primer and Linkedin). The first example is the best to feature the capability of the system of providing a narrative answer, while producing 100% valid statistics that ran over the whole dataset. The second and third examples are more analytical, and the answers more structured, and yet they are much better than if they were presented only as tables or lists.
+
+
+Example 1: shopping and entertainment
+
+The dataset combines my amazon shopping history, and my prime entertainment activity (movies, tv series, documentaries…) All datapoints have timestamps, name, a short description, and other metadata.
+
+Question: analyze my yearly mood looking at my shopping patterns, and my entertainment patterns
+
+
+Answer:
+
+Yearly Mood Analysis Based on Shopping and Entertainment Patterns
+
+2013
+- Shopping: 6 purchases, total spent $271.70, total items 6, average cost per item $45.28.
+- Entertainment: No activities recorded.
+  Mood interpretation: Your shopping activity was low or moderate this year.
+
+2014
+- Shopping: 17 purchases, total spent $748.75, total items 9, average cost per item $83.19.
+- Entertainment: No activities recorded.
+  Mood interpretation: Your year was marked by significant shopping activity.
+
+2015
+- Shopping: 59 purchases, total spent $2414.10, total items 61, average cost per item $39.58.
+- Entertainment: No activities recorded.
+  Mood interpretation: Your year was marked by significant shopping activity.
+
+2016
+- Shopping: 43 purchases, total spent $1057.47, total items 45, average cost per item $23.50.
+- Entertainment: 14 activities, average interaction weight 7.17.
+  Top genres: Fantasy, Adventure, Science Fiction.
+  Most frequent main genre: Science Fiction.
+  Mood interpretation: You had a very active and engaged year, enjoying both shopping and entertainment.
+
+2017
+- Shopping: 151 purchases, total spent $2771.26, total items 152, average cost per item $18.23.
+- Entertainment: 9 activities, average interaction weight 0.80.
+  Top genres: /, Science Fiction.
+  Most frequent main genre: /.
+  Mood interpretation: Your year showed mixed activity levels between shopping and entertainment.
+
+2018
+- Shopping: 102 purchases, total spent $2235.74, total items 106, average cost per item $21.09.
+- Entertainment: 10 activities, average interaction weight 9.80.
+  Top genres: Drama, Fantasy, Adventure.
+  Most frequent main genre: Drama.
+  Mood interpretation: You had a very active and engaged year, enjoying both shopping and entertainment.
+
+2019
+- Shopping: 264 purchases, total spent $5201.01, total items 297, average cost per item $17.51.
+- Entertainment: 18 activities, average interaction weight 15.94.
+  Top genres: Drama, Action, Science Fiction.
+  Most frequent main genre: Drama.
+  Mood interpretation: You had a very active and engaged year, enjoying both shopping and entertainment.
+
+2020
+- Shopping: 138 purchases, total spent $3724.05, total items 194, average cost per item $19.20.
+- Entertainment: 331 activities, average interaction weight 14.08.
+  Top genres: Drama, Adventure, Mystery.
+  Most frequent main genre: Drama.
+  Mood interpretation: You had a very active and engaged year, enjoying both shopping and entertainment.
+
+2021
+- Shopping: 58 purchases, total spent $1355.28, total items 72, average cost per item $18.82.
+- Entertainment: 157 activities, average interaction weight 9.01.
+  Top genres: Scifi, Comedy, Animation.
+  Most frequent main genre: Animation.
+  Mood interpretation: You had a very active and engaged year, enjoying both shopping and entertainment.
+
+2023
+- Shopping: No purchases recorded.
+- Entertainment: 2 activities, average interaction weight 0.41.
+  Top genres: Thriller, Comedy.
+  Most frequent main genre: Thriller.
+  Mood interpretation: Your entertainment activity was low or moderate this year.
+
+2024
+- Shopping: No purchases recorded.
+- Entertainment: 20 activities, average interaction weight 24.96.
+  Top genres: Drama, Action, Adventure.
+  Most frequent main genre: Drama.
+  Mood interpretation: You focused more on entertainment this year with high engagement.
+
+2025
+- Shopping: No purchases recorded.
+- Entertainment: 33 activities, average interaction weight 26.43.
+  Top genres: Documentary, Drama, Thriller.
+  Most frequent main genre: Documentary.
+  Mood interpretation: You focused more on entertainment this year with high engagement.
+
+
+
+
+
+Semantic Analytic Integration
+Additional Information
+
+
+
+The cane, not the fish.
+In short this technique is about using an LLM to build a solution around a question, instead of just having a static answer to the question. It manages to do this without sending data, based on very light prompts and answers,  and being able to use and reuse the solution locally and independently of the LLM. This solves three big problems:
+privacy and security concerns regarding the data, 
+huge delays that impact the user experience, 
+huge costs reduction by shrinking not only the size of prompt and answers, but also the number of LLM requests.
+These are the key advantages of the technique:
+Questions about a dataset are answered without sending any part of the data to the LLM, not a single datapoint or aggregated statistics. Typical methods such as RAG send a sample of the data.
+Because there’s no sampling, the answer is 100% accurate, and every single statistic is correct
+The size of the prompt is very small, again because there’s no parts of the data being sent. The size of the answer is small. Time and monetary costs are very low.
+The system uses the remote LLM to create the solution locally. This solution becomes independent of the LLM, and can be applied over subsets of the datasets, such as samples, or subsets filtered by some criteria. It can also be applied to other datasets with the same structure. This happens locally and instantly, as opposed to having to send a new prompt each time the data changes. This also has a substantial impact in time and monetary costs.
+Local independent solutions can be stored, further reducing the necessity of requesting LLMs.
+The principles behind the solution are:
+Ecological: Build solutions that last and that can be reused (as opposed to use-and-throw, and heavy dependence on centralised resources). Reduce size of information and energy flows
+Ethical: Individuals and organisations should not share their own data in order to be able to compute them.
+Cognitive: “Computation as close to cognition” means that collaborative intelligences interact agile, accelerating back-and-for exchanges and increasing collective intelligence outputs.
+
+
+_____
+
+
+
+
+In a recent demonstration to close stakeholders that work at banks and are familiar with heavy AI infrastructure on premises, there was a misunderstanding of the system. Someone commented that banks and other organizations are already doing that: installing their own AI infrastructure, based on LLM open source, or using Amazon dedicated servers with access to OpenAI, Anthropic, etc… models… so the data is analyzed by the models “locally”. 
+
+Our system is very different from the described scenario that’s indeed becoming standard, and that although it solves part of the privacy and security concerns and risks regarding the data, the data is still being delivered to LLMs in Amazon servers, or in the best case scenario to in premises models. But this standard solution is heavy and costful, and requires moving and processing large amounts of data, and still without accurate results because such data can only be processed by LLMs in limited contexts, etc… Our solution is free from all these issues that typically represent very large infrastructure costs.
+
+
+
+_____
+
+
+Because in ou system the LLm helps building an agent that will directly operate on the data, and because the agent is capable of running the requested analysis on any data that has the described structure, this agent can be:
+-stored
+-deployed on a continuous pipeline
+-shared 
+-transcated
+
+And again, in all those situations there’s no need to connect with an LLM.
+
+If for instance an agent was created that solves a critical business problem based on some standard bank dataset, this agent could be shared across countries and offices, could be sold to other banks, etc…
+
+
+–
+
+I’m using the concept agent because it’s a model with a directed aim, that will perform a task over a resource (a dataset), and such resource can change (the differents datasets with same structure). But it’s possible to also build agents with the system that are capable of using other tools.
+
+For instance: in the initial use cases we built we used Amazon purchases data, and one could ask about patterns in products, what kind of stuff a person or group of people buy on weekends compared to weekdays, etc… but the system can also build an agent based on the data plan and execute transactions. An example would be building an agent that understands the patterns of parts acquisition on an assembling plant and currently buy parts that are likely running out of stock. Granted, such specialized agents exist, but with our system you can buy agents that are much more elaborated because they are guided by semantics, so the request could be something like “refill current stock of x microchip whenever there are news signaling conflicts on regions that produce copper or gold”…  you build such an agent with our system connected to two datasets: stock and news and one tool for ordering supplies. Because agents are semantic, they won´t just go and execute actions (use tools) but also build a narrative (explanation/motivation) around each action.
+

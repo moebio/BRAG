@@ -1,0 +1,37 @@
+Giving a Telescope as a Gift
+Top
+A telescope can be the best or the worst gift in the world. Many end up unused because their quality only allows you to see a bit of the Moon, which gets boring. Sometimes a telescope is given without any accompanying knowledge. But other times, as you can read in the biographies of astronomers, astronauts, astrophysicists—but also artists, travelers, and explorers—a telescope can change a life.
+Which telescope to give, especially to a child: here I try to answer that question well, so that the gift is a complete success, the boy or girl enjoys it to the fullest, sees the greatest variety of objects, and frustrations are minimized.
+
+MidI'll get straight to the point with my recommendation: buy a Dobsonian. The most important thing in a telescope is the aperture—the amount of light it lets in. Zoom is secondary and actually depends on how much light you receive. A Dobsonian gives you the most light for the least money. The reason is that it replaces an expensive tripod (which typically works poorly in cheaper models) with a base that, besides being simpler and more robust, is smooth to operate by hand. Searching the sky becomes easier. You'll need a tall base, like a table. A good option is the National Geographic 114/500, where 114 indicates the aperture in millimeters. This is a lot of light (and therefore clarity and definition even at quite high magnifications) for an inexpensive telescope. There are also 76mm versions that are even cheaper.
+
+Some people, probably experienced observers, recommend binoculars instead of a telescope for beginners. There are good reasons, and indeed they might let you see more for less money if used well. I love binoculars, I own several, and I love how fast and natural they are to use. But the experience of exploring the sky goes far beyond the quality and sharpness of objects. Kids want to feel like astronomers, and a telescope gives them a more exciting stage. They also want to find an object and then show it to others—show that they found it, share the discovery. Kids dream of telescopes, not binoculars. If they become interested in astronomy, at some point they'll also discover how wonderful binoculars are.
+
+A big NO NO NO from me: GoTo systems, automatic devices that find objects by entering coordinates and moving with motors—or sometimes by attaching a phone that guides you. The mistake is thinking this makes the experience easier and therefore better for a child. This idea fails on several points. First, what you spend on electronics you lose in light-gathering power. For the same price you can buy a large Dobsonian like mine, and what you can see is mind-blowing. Second, most of the time these systems complicate things instead of simplifying them: software setup, calibration, operation… you can't imagine how many of these telescopes have gone unused because of that first frustrating experience. Finally, and this is actually the most important point: finding the celestial object is the astronomer's experience. Without that, a telescope becomes like a Netflix of blurry spots, one after another. Reading a star map, or maybe using Stellarium (free for mobile or browser), using constellations as references (and the stories they carry), and then managing to find a galaxy or a globular cluster—that's the essence of the experience you want to give. Science, like exploration and art, is searching; take that away and you take away the magic. A Dobsonian has the advantage of being smooth and easy to handle, helping with the search. That doesn't mean the search is easy—there are plenty of challenges.
+
+If you're going to give a telescope to a child, and you yourself don't know astronomy or have never used a telescope, don't do it unless you're willing to commit to accompanying them on the adventure of learning to see the sky. But if you decide to and you have the interest and time, it can be one of the best things that ever happens to you: learning with your kids to explore the universe, discovering together the what and the how. There are several challenges, but all are within reach of someone with curiosity. To start: there are very good resources (I list some below). And since you chose a good telescope with plenty of light, there are a great number of celestial objects to begin with that are not difficult. In fact, there is a sort of "difficulty ladder" that gives you a slightly higher challenge each time, making the experience always challenging but incremental. With a 114mm Dobsonian you can see: the Moon in great detail, planets (even Venus with its crescent phases), planetary moons, Saturn's rings!, double stars, galaxies, globular clusters, open clusters, nebulae, and even at least one planetary nebula… objects ranging from light-minutes away to millions of light-years… objects that, if you research a bit, are full of stories and science, containing the keys to the origins and fate of planets, stars, and galaxies.
+
+You also have to consider where the telescope will be used. In the city, you'll only be able to see the Moon, maybe the planets and some of their moons. You'll need to go out to the countryside at times (your small Dobsonian can easily be taken anywhere!).
+
+There are two main resources for this adventure: a good book and a good star map (the second can be paper or digital). Here are my book recommendations:
+
+Top50 Things to See with a Telescope: A Young Stargazer's Guide, John A. Read (also available in a Southern Hemisphere edition). This book is the best companion for a small telescope.
+
+TopStars and Planets (Nature Guides), Dinwiddie, Robert.
+
+TopStarfinder: The Complete Beginner's Guide to Exploring the Night Sky (DK). It includes a planisphere.
+
+And here's a list of other resources:
+
+Stellarium, online sky map (or app)
+
+Astronomy Bingo, a game I developed when I taught astronomy to kids
+
+Build a Paper Planisphere — highly recommended
+
+Night Visibility Forecast, essential for planning observation nights
+
+Sky Visibility Map, for planning trips!
+
+Santiago Ortiz
+A few days before December 2025

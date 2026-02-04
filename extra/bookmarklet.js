@@ -1,0 +1,1 @@
+javascript: void ((function () { var b = 'http://127.0.0.1:8080/BRAG/index.html'; var u = encodeURIComponent(window.location.href); var t = encodeURIComponent(document.title); window.open(b + '#url=' + u + '&title=' + t, 'BRAG_PRIMARY_STATION'); })())

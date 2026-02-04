@@ -1,0 +1,16 @@
+{
+	"receives":[
+		{
+			"type":"data",
+			"value_type":"Object",
+			"description":""
+		},
+		{
+			"type":"configuration",
+			"value_type":"Object"
+		}
+	],
+	"sends":[
+		
+	]
+}

@@ -1,0 +1,134 @@
+{
+	"description":"Net visualizes a network, based on simulated forces. It allows for multiple layout and visual configurations (see configuration documentation). Allows for hovering and selecting nodes (with different associated behaviors).",
+	"instructions_developer":"",
+	"instructions_user":"Hover and click on nodes for expanding information and selecting",
+	"authors":["Santiago Ortiz"],
+	"tags":["networks", "", "visualization"],
+	"images":[],
+
+	"receives":[
+		{
+			"type":"network",
+			"description":"Network to be visualized. It receives a Net instance, or a JSON network. An Object with structure {nodes:500, reltions:2000} will generate a random network with given number of nodes and relations (optionally relations could be a number in [0,1] for the probablity of two nodes to be connected)",
+			"value_type":"Net",
+			"kind":"data",
+			"optional":"false"
+		},
+		{
+			"type":"configuration",
+			"description":"Configuration object, configures nodes and relations appearance, physics simulation parameters and layout. A sub-object (e.g. {physics:{friction:0.5}}) could be sent at any moment, it will only modified the specific parameters. See documentation.txt",
+			"value_type":"Object",
+			"kind":"configuration",
+			"optional":"true"
+		},
+		{
+			"type":"over",
+			"description":"node or id of node to be hovered (will behave as if the cursor hovers it)",
+			"value_type":"Object",
+			"kind":"command",
+			"optional":"true"
+		},
+		{
+			"type":"select",
+			"description":"forces the selection of a node, the value is a node or an id",
+			"value_type":"string",
+			"kind":"layout",
+			"optional":"true"
+		},
+		{
+			"type":"select by name",
+			"description":"forces the selection of a node, the value is the node name",
+			"value_type":"string",
+			"kind":"layout",
+			"optional":"true"
+		},
+		{
+			"type":"unselect",
+			"description":"forces the un-selection of a node (if any is selected, if not the command is unoquous), doesn´t require to send value.",
+			"value_type":"string",
+			"kind":"layout",
+			"optional":"true"
+		}
+		,
+		{
+			"type":"position",
+			"description":"moves the space to a certain position and certain zoom, to use it send an object with all or some of the following numeric properties: x, y, zoom",
+			"value_type":"Object",
+			"kind":"command",
+			"optional":"true"
+		}
+		,
+		{
+			"type":"load_image",
+			"description":"node or id of node to start downloading its image. If a node has the property urlImage it starts downloading the image (once it loaded it will be drawn, depending on the drawing mode)",
+			"value_type":"Object",
+			"kind":"command",
+			"optional":"true"
+		}
+		,
+		{
+			"type":"layout",
+			"description":"sets a layout, options are: clusters, clusters category (uses category property of nodes), cloud, xy (uses properties x and y of nodes), x (uses property x of nodes), y (uses property y of nodes), free (free nodes from fixed x and/or y positions), free x (frees nodes from x position), free y (frees nodes from y position), fit in window. See documentation.txt",
+			"value_type":"",
+			"kind":"command",
+			"optional":"true"
+		}
+	],
+
+	"sends":[
+		{
+			"type":"over",
+			"description":"hovered node, sends every time a new node is hovered",
+			"value_type":"Nd",
+			"kind":"command"
+		},
+		{
+			"type":"select",
+			"description":"selected node, sends every time a new node is selected",
+			"value_type":"Nd",
+			"kind":"command"
+		},
+		{
+			"type":"unselected",
+			"description":"sends every time a node is unselected",
+			"value_type":"",
+			"kind":"command"
+		},
+		{
+			"type":"out",
+			"description":"sends every time the cursor leaves a node",
+			"value_type":"",
+			"kind":"command"
+		},
+		{
+			"type":"over relation",
+			"description":"hovered relation, sends every time a new relation is hovered",
+			"value_type":"Relation",
+			"kind":"command"
+		},
+		{
+			"type":"selected relation",
+			"description":"selected relation, sends every time a new relation is selected",
+			"value_type":"Relation",
+			"kind":"command"
+		},
+		{
+			"type":"selected pair",
+			"description":"selected pair of node, sends every time a pair of nodes is selected, the value contains an Object with values node0 and node1",
+			"value_type":"Object",
+			"kind":"command"
+		},
+		{
+			"type":"unselected pair",
+			"description":"sends every time a pair is unselected",
+			"value_type":"",
+			"kind":"command"
+		},
+		{
+			"type":"report",
+			"description":"reports miscellaneous events, currently the rendering of first network (value:first) or consecutive networks (value:new)",
+			"value_type":"string",
+			"kind":"command"
+		}
+	]
+}

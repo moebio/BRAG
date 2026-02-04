@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BRAG Bridge</title>
+</head>
+
+<body>
+    <script>
+        const bc = new BroadcastChannel('brag_coordination');
+
+        window.addEventListener('message', (event) => {
+            // Safety check: only allow content from our bookmarklet logic
+            if (event.data.type === 'BRAG_PING') {
+                bc.postMessage({ type: 'HEARTBEAT_REQUEST' });
+            } else if (event.data.type === 'BRAG_SEND_CONTENT') {
+                bc.postMessage({
+                    type: 'CONTENT_DATA',
+                    content: event.data.content,
+                    title: event.data.title,
+                    url: event.data.url
+                });
+            }
+        });
+
+        bc.onmessage = (ev) => {
+            if (ev.data.type === 'HEARTBEAT_RESPONSE') {
+                window.parent.postMessage({ type: 'BRAG_TAB_FOUND' }, '*');
+            }
+        };
+
+        // Notify parent bridge is ready
+        window.parent.postMessage({ type: 'BRAG_BRIDGE_READY' }, '*');
+    </script>
+</body>
+
+</html>
