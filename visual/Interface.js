@@ -308,7 +308,7 @@ const setupSlider = () => {
         const processedChunks = CHUNKS.map(chunk => {
             let new_chunk = {
                 ...chunk,
-                embedding_compressed: encodeEmbeddingInt8ToBase64(chunk.embedding)
+                embedding_compressed: llmService.encodeEmbeddingInt8ToBase64(chunk.embedding)
             }
             delete new_chunk.embedding;
             return new_chunk;
