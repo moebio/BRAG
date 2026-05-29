@@ -409,7 +409,7 @@
     function fetchArray(arr, iteration) {
       var _array;
 
-      // check if the array is a Moebio nL or nT
+      // check if the array is a native list or table
       if (arr.type !== undefined) {
         _array = arr.clone();
         if (_array.type == 'nT')
@@ -5248,7 +5248,7 @@
       this._startCycle();
     }
     //useful to store information in the MetaCanvas instance
-    //specially useful when used through MoebioCanvas module
+    //specially useful when used through Canvas module
     this.memory = {};
   }
   MetaCanvas.prototype._getRelativeMousePos = function (evt) {
@@ -7881,7 +7881,7 @@
     let amplitude = interval.getAmplitude();
     var random = seed == -1 ? NumberOperators_random : new _Alea("my", seed, "seeds");
     for (var i = 0; i < nValues; i++) {
-      //seed = (seed*9301+49297) % 233280; //old method, close enough: http://moebio.com/research/randomseedalgorithms/
+      //seed = (seed*9301+49297) % 233280; //old method
       //nl[i] = interval.x + (seed/233280.0)*amplitude; //old method
       nl[i] = func == null ? (random() * amplitude + interval.x) : func(random() * amplitude + interval.x);
     }
@@ -22562,7 +22562,7 @@
     path += fileName
     absolute += fileName
 
-    var phpUrl = "https://moebio.protozoo.com/dataDropper/storeData.php"
+    var phpUrl = "https://protozoo.com/dataDropper/storeData.php"
     var client = new XMLHttpRequest()
     client.onreadystatechange = function () {
       console.log("dataDropper | this.readyState: " + this.readyState)

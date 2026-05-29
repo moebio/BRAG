@@ -2,7 +2,7 @@ class LLMService {
 	constructor() {
 		const keys = window.LLM_KEYS || {};
 		this.shift_n_api = keys.shift_n_api || "";
-		this.moebio_api = keys.moebio_api || "";
+		this.secondary_api = keys.secondary_api || "";
 		this.dw_api = keys.dw_api || "";
 		this.manu_api = keys.manu_api || "";
 		this.kohka_api = keys.kohka_api || "";
@@ -81,7 +81,7 @@ class LLMService {
 		let current_url = this.llm_api_urlCompletions;
 
 		let llm_api_key;
-		if (promptObject.use_moebio_proxy) {
+		if (promptObject.use_secondary_proxy) {
 			llm_api_key = this.CHAT_GPT_API_KEY;
 		} else if (model_used.includes("claude")) {
 			llm_api_key = null;
